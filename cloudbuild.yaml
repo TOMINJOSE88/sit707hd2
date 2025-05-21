@@ -1,11 +1,11 @@
 steps:
   - name: 'python'
-    entrypoint: 'pip'
-    args: ['install', '-r', 'requirements.txt']
-
-  - name: 'python'
-    entrypoint: 'pytest'
-    args: ['test_app.py']
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        pip install -r requirements.txt
+        pytest test_app.py
 
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/$PROJECT_ID/bmi-app', '.']
