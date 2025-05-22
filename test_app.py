@@ -95,3 +95,14 @@ def test_zero_height():
     except AssertionError:
         log_test(name, desc, False)
         raise
+def test_bmi_failing_case():
+    name = "Intentional Fail Case - Wrong BMI Category"
+    desc = "Input: weight=70, height=1.75 (Expecting 'Obese' instead of correct 'Normal weight')"
+    try:
+        client = app.app.test_client()
+        response = client.post('/bmi', data={"weight": "70", "height": "1.75"})
+        assert b"Obese" in response.data  # This will fail intentionally
+        log_test(name, desc, True)
+    except AssertionError:
+        log_test(name, desc, False)
+        raise
